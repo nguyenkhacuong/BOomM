@@ -66,12 +66,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener, MouseLis
         // Check score can save or not
         if (arrHightScore.size() >= 10) {
             if (gameWorld.bomber.getScore() > arrHightScore.get(arrHightScore.size() - 1).getScore()) {
-                String name = JOptionPane.showInputDialog("Please input Your Name");
+                String name = JOptionPane.showInputDialog("Mời nhập tên của bạn");
                 HightScore newScore = new HightScore(name, gameWorld.bomber.getScore());
                 arrHightScore.add(newScore);
             }
         } else {
-            String name = JOptionPane.showInputDialog("Please input Your Name");
+            String name = JOptionPane.showInputDialog("Mời nhập tên của bạn");
             HightScore newScore = new HightScore(name, gameWorld.bomber.getScore());
             arrHightScore.add(newScore);
         }

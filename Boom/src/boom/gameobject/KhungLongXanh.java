@@ -7,25 +7,24 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 
-public class Haitacto extends Bomber {
+public class KhungLongXanh extends Bomber {
     private int speeds;
     private int move;
     private BufferedImage imageup, imagedown, imageright, imageleft;
     private Random random;
 
-    public Haitacto(float posX, float posY, float width, float height, int direction, int speeds, GameWorld gameWorld) {
+    public KhungLongXanh(float posX, float posY, float width, float height, int direction, int speeds, GameWorld gameWorld) {
         super(posX, posY, width, height, gameWorld);
         random = new Random();
         this.direction = direction;
         this.speeds = speeds;
 
 
-
         try {
-            imageup = ImageIO.read(new File("./Character/haitactolen.png"));
-            imagedown = ImageIO.read(new File("./Character/haitactoxuong.png"));
-            imageright = ImageIO.read(new File("./Character/haitactophai.png"));
-            imageleft = ImageIO.read(new File("./Character/haitactotrai.png"));
+            imageup = ImageIO.read(new File("./Character/khunglonglen.png"));
+            imagedown = ImageIO.read(new File("./Character/khunglongxuong.png"));
+            imageright = ImageIO.read(new File("./Character/khunglongphai.png"));
+            imageleft = ImageIO.read(new File("./Character/khunglongtrai.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,7 +95,7 @@ public class Haitacto extends Bomber {
                         break;
                     case 2:
                         setDirection(DIR_DOWN);
-                        g2.drawImage(imagedown, (int) posX - (imagedown.getWidth()) / 2, (int) posY - imagedown.getHeight() / 2, null);
+                        g2.drawImage(imagedown, (int) posX - (imagedown.getWidth()) / 2, (int) posY - (imagedown.getHeight()) / 2, null);
                         break;
                     case 3:
                         setDirection(DIR_LEFT);
@@ -150,29 +149,29 @@ public class Haitacto extends Bomber {
     }
 
     public boolean mostervsWall(){
-            for (int i = 0; i < gameWorld.maps.map.length; i++) {
-                for (int j = 0; j < gameWorld.maps.map[0].length; j++) {
-                    if (gameWorld.maps.map[i][j] > 0 || PhysicalMap.map[i][j] == -10) {
-                        if (direction == DIR_LEFT) {
-                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                            Rectangle rectangle2 = new Rectangle((int) (posX - width), (int) (posY - height / 2), (int) width, (int) height);
-                            if (rectangle1.intersects(rectangle2)) return false;
-                        } else if (direction == DIR_RIGHT) {
-                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                            Rectangle rectangle2 = new Rectangle((int) (posX), (int) (posY - height / 2), (int) width, (int) height);
-                            if (rectangle1.intersects(rectangle2)) return false;
-                        } else if (direction == DIR_DOWN) {
-                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                            Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height / 25), (int) width, (int) height);
-                            if (rectangle1.intersects(rectangle2)) return false;
-                        } else if (direction == DIR_UP) {
-                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                            Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height), (int) width, (int) height);
-                            if (rectangle1.intersects(rectangle2)) return false;
-                        }
+        for (int i = 0; i < gameWorld.maps.map.length; i++) {
+            for (int j = 0; j < gameWorld.maps.map[0].length; j++) {
+                if (gameWorld.maps.map[i][j] > 0 || PhysicalMap.map[i][j] == -10 || PhysicalMap.map[i][j] == -11) {
+                    if (direction == DIR_LEFT) {
+                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                        Rectangle rectangle2 = new Rectangle((int) (posX - width), (int) (posY - height / 2), (int) width, (int) height);
+                        if (rectangle1.intersects(rectangle2)) return false;
+                    } else if (direction == DIR_RIGHT) {
+                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                        Rectangle rectangle2 = new Rectangle((int) (posX), (int) (posY - height / 2), (int) width, (int) height);
+                        if (rectangle1.intersects(rectangle2)) return false;
+                    } else if (direction == DIR_DOWN) {
+                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                        Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height / 25), (int) width, (int) height);
+                        if (rectangle1.intersects(rectangle2)) return false;
+                    } else if (direction == DIR_UP) {
+                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                        Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height), (int) width, (int) height);
+                        if (rectangle1.intersects(rectangle2)) return false;
                     }
                 }
             }
+        }
         return true;
     }
 

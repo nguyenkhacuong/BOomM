@@ -5,38 +5,37 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
-public class KhungLongXanh extends Bomber {
+public class Moster extends Bomber{
     private int speeds;
-    private int move;
+    private int moves;
     private BufferedImage imageup, imagedown, imageright, imageleft;
+    public boolean LIVE = true;
     private Random random;
 
-    public KhungLongXanh(float posX, float posY, float width, float height, int direction, int speeds, GameWorld gameWorld) {
+    public Moster(float posX, float posY, float width, float height,int direction, int speeds, GameWorld gameWorld){
         super(posX, posY, width, height, gameWorld);
         random = new Random();
         this.direction = direction;
         this.speeds = speeds;
 
-
         try {
-            imageup = ImageIO.read(new File("./Character/khunglonglen.png"));
-            imagedown = ImageIO.read(new File("./Character/khunglongxuong.png"));
-            imageright = ImageIO.read(new File("./Character/khunglongphai.png"));
-            imageleft = ImageIO.read(new File("./Character/khunglongtrai.png"));
+            imageup = ImageIO.read(new File("./Character/haitacnholen.png"));
+            imagedown = ImageIO.read(new File("./Character/haitacnhoxuong.png"));
+            imageright = ImageIO.read(new File("./Character/haitacnhophai.png"));
+            imageleft = ImageIO.read(new File("./Character/haitacnhotrai.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 
     public void draw(Graphics2D g2) {
         if (direction == DIR_DOWN) {
             if (mostervsWall() == false) {
                 setSpeedY(0);
-                this.move = 1 + random.nextInt(3);
+                int move = 1 + random.nextInt(3);
                 switch (move) {
                     case 1:
                         setDirection(DIR_RIGHT);
@@ -62,7 +61,7 @@ public class KhungLongXanh extends Bomber {
         } else if (direction == DIR_UP) {
             if (mostervsWall() == false) {
                 setSpeedY(0);
-                this.move = 1 + random.nextInt(3);
+                int move = 1 + random.nextInt(3);
                 switch (move) {
                     case 1:
                         setDirection(DIR_LEFT);
@@ -87,7 +86,7 @@ public class KhungLongXanh extends Bomber {
         } else if (direction == DIR_RIGHT) {
             if (mostervsWall() == false) {
                 setSpeedX(0);
-                this.move = 1 + random.nextInt(3);
+                int move = 1 + random.nextInt(3);
                 switch (move) {
                     case 1:
                         setDirection(DIR_UP);
@@ -95,7 +94,7 @@ public class KhungLongXanh extends Bomber {
                         break;
                     case 2:
                         setDirection(DIR_DOWN);
-                        g2.drawImage(imagedown, (int) posX - (imagedown.getWidth()) / 2, (int) posY - (imagedown.getHeight()) / 2, null);
+                        g2.drawImage(imagedown, (int) posX - (imagedown.getWidth()) / 2, (int) posY - imagedown.getHeight() / 2, null);
                         break;
                     case 3:
                         setDirection(DIR_LEFT);
@@ -112,7 +111,7 @@ public class KhungLongXanh extends Bomber {
         } else if (direction == DIR_LEFT) {
             if (mostervsWall() == false) {
                 setSpeedX(0);
-                this.move = 1 + random.nextInt(3);
+                int move = 1 + random.nextInt(3);
                 switch (move) {
                     case 1:
                         setDirection(DIR_DOWN);
@@ -140,7 +139,9 @@ public class KhungLongXanh extends Bomber {
     }
 
     @Override
-    public void reset(float xNew, float yNew) {}
+    public void reset(float xNew, float yNew) {
+
+    }
 
     @Override
     public void update() {
@@ -149,29 +150,30 @@ public class KhungLongXanh extends Bomber {
     }
 
     public boolean mostervsWall(){
-        for (int i = 0; i < gameWorld.maps.map.length; i++) {
-            for (int j = 0; j < gameWorld.maps.map[0].length; j++) {
-                if (gameWorld.maps.map[i][j] > 0 || PhysicalMap.map[i][j] == -10) {
-                    if (direction == DIR_LEFT) {
-                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                        Rectangle rectangle2 = new Rectangle((int) (posX - width), (int) (posY - height / 2), (int) width, (int) height);
-                        if (rectangle1.intersects(rectangle2)) return false;
-                    } else if (direction == DIR_RIGHT) {
-                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                        Rectangle rectangle2 = new Rectangle((int) (posX), (int) (posY - height / 2), (int) width, (int) height);
-                        if (rectangle1.intersects(rectangle2)) return false;
-                    } else if (direction == DIR_DOWN) {
-                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                        Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height / 25), (int) width, (int) height);
-                        if (rectangle1.intersects(rectangle2)) return false;
-                    } else if (direction == DIR_UP) {
-                        Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
-                        Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height), (int) width, (int) height);
-                        if (rectangle1.intersects(rectangle2)) return false;
+            for (int i = 0; i < gameWorld.maps.map.length; i++) {
+                for (int j = 0; j < gameWorld.maps.map[0].length; j++) {
+                    if (gameWorld.maps.map[i][j] > 0 || PhysicalMap.map[i][j] == -10 || PhysicalMap.map[i][j] == -11) {
+                        if (direction == DIR_LEFT) {
+                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                            Rectangle rectangle2 = new Rectangle((int) (posX - width), (int) (posY - height / 2), (int) width, (int) height);
+                            if (rectangle1.intersects(rectangle2)) return false;
+                        } else if (direction == DIR_RIGHT) {
+                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                            Rectangle rectangle2 = new Rectangle((int) (posX), (int) (posY - height / 2), (int) width, (int) height);
+                            if (rectangle1.intersects(rectangle2)) return false;
+                        } else if (direction == DIR_DOWN) {
+                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                            Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height / 25), (int) width, (int) height);
+                            if (rectangle1.intersects(rectangle2)) return false;
+                        } else if (direction == DIR_UP) {
+                            Rectangle rectangle1 = new Rectangle(j * 50, i * 50, 50, 50);
+                            Rectangle rectangle2 = new Rectangle((int) (posX - width / 2), (int) (posY - height), (int) width, (int) height);
+                            if (rectangle1.intersects(rectangle2)) return false;
+                        }
                     }
                 }
             }
-        }
+
         return true;
     }
 
@@ -183,11 +185,4 @@ public class KhungLongXanh extends Bomber {
         this.speeds = speeds;
     }
 
-    public int getMove() {
-        return move;
-    }
-
-    public void setMove(int move) {
-        this.move = move;
-    }
 }

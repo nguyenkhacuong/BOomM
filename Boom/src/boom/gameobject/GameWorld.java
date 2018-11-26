@@ -76,6 +76,7 @@ public class GameWorld {
         mosters.add(moster5);
         mosters.add(moster6);
         mosters.add(moster7);
+
         count_monster = mosters.size();
 
         mosters2 = new ArrayList<>();

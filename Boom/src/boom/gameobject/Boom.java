@@ -383,6 +383,20 @@ public class Boom {
                     for (int i = 1; i <= size; i++) {
                         if (explodedDOWN == true) {
                             // Is bomber impact bombang
+                            if ((y0) == (int)gameWorld.bomber.getPosY()/50 && x0 == (int)gameWorld.bomber.getPosX()/50){
+                                if (gameWorld.bomber.heart > 0) {
+                                    gameWorld.bomber.heart --;
+                                }
+                                GameSound.instance.getAudio(GameSound.BOMBER_DIE).play();
+                                Bomber.ALIVE = false;
+                                if (GameWorld.level == 1) {
+                                    gameWorld.bomber.reset(150, 625);
+                                } else if (GameWorld.level == 2){
+                                    gameWorld.bomber.reset(1120, 625);
+                                } else if (GameWorld.level == 3){
+                                    gameWorld.bomber.reset(510, 625);
+                                }
+                            }
                             if ((y0+i) == (int)gameWorld.bomber.getPosY()/50 && x0 == (int)gameWorld.bomber.getPosX()/50){
                                 if (gameWorld.bomber.heart > 0) {
                                     gameWorld.bomber.heart --;
